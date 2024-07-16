@@ -50,6 +50,29 @@ bcrypt = "3.2.0"
 pytest = "*"
 pytest-django = "*"
 pytest-socket = "*"
+
+# Quality Tools ----------------------------------------------------------------
+[tool.ruff]
+target-version = "py38"
+exclude = ["migrations"]
+lint.select = ["ALL"]
+lint.ignore = [
+  "ANN101",   # Missing Type Annotation for "self"
+  "ANN401",   # Dynamically typed expressions (typing.Any) are disallowed in `**kwargs`"
+  "ARG001",   # Unused function argument (request, ...)
+  "ARG002",   # Unused method argument (*args, **kwargs)
+  "D",        # Missing or badly formatted docstrings
+  "FBT",      # Flake Boolean Trap (don't use arg=True in functions)
+  "RUF012",   # Mutable class attributes https://github.com/astral-sh/ruff/issues/5243
+
+  # Project specific
+  "N801",     # Class name `ldap_pbkdf2_sha512` should use CapWords convention
+
+  # Ruff format
+  "COM812",   # Checks for the absence of trailing commas
+  "ISC001",   # Checks for implicitly concatenated strings on a single line
+]
+
 [tool.ruff.lint.extend-per-file-ignores]
 # Also ignore `E402` in all `__init__.py` files.
 "tests.py" = [

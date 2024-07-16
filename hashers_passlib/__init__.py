@@ -1,29 +1,32 @@
-# -*- coding: utf-8 -*-
 #
-# This file is part of django-hashers-passlib (https://github.com/mathiasertl/django-hashers-passlib).
+# This file is part of django-hashers-passlib (
+# https://github.com/mathiasertl/django-hashers-passlib).
 #
-# django-hashers-passlib is free software: you can redistribute it and/or modify it under the terms of the GNU
-# General Public License as published by the Free Software Foundation, either version 3 of the License, or (at
-# your option) any later version.
+# django-hashers-passlib is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later version.
 #
-# django-hashers-passlib is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-# even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
-# License for more details.
+# django-hashers-passlib is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License along with django-hashers-passlib. If not,
-# see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU General Public License along with
+# django-hashers-passlib. If not, see <http://www.gnu.org/licenses/>.
 
 """Collection of hashers based on passlib hashers."""
 
-# pylint: disable=invalid-name  # class names follow their passlib counterparts
+from __future__ import annotations
 
 from collections import OrderedDict
 from importlib import metadata
+from typing import TYPE_CHECKING, Any
 
 from django.conf import settings
 from django.contrib.auth.hashers import BasePasswordHasher, mask_hash
 from django.utils.translation import gettext_noop as _
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 _SETTINGS_MAPPING = (
     (_("rounds"), "iterations", False),
@@ -46,63 +49,69 @@ class PasslibHasher(BasePasswordHasher):
     _hasher = None
     _algorithm = None
 
-    def salt(self):
+    def salt(self) -> None:
         """Just return None, passlib handles salt-generation."""
-        return None
+        return
 
     @property
-    def algorithm(self):
+    def algorithm(self) -> str:
         """Get name of the algorithm as used in the Django database."""
         if self._algorithm is None:
             self._algorithm = self.__class__.__name__
         return self._algorithm
 
-    def get_handler(self):
-        """Get the function name used by the hash algorithm.
+    def get_handler(self) -> Callable:
+        """
+        Get the function name used by the hash algorithm.
 
-        This defaults to the name of the algorithm, but sometimes we need to override it.
+        This defaults to the name of the algorithm,
+        but sometimes we need to override it.
         """
         if self.handler is None:
             return self.algorithm
         return self.handler
 
     @property
-    def hasher(self):
+    def hasher(self) -> Callable:
         """Property to get the passlib hasher class."""
         if self._hasher is None:
             self._hasher = getattr(self._load_library(), self.get_handler())
         return self._hasher
 
-    def verify(self, password, encoded):
+    def verify(self, password: str, encoded: str) -> bool:
         return self.hasher.verify(password, self.to_orig(encoded))
 
-    def encode(self, password, salt=None, **kwargs):
+    def encode(self, password: str, salt: str | None = None, **kwargs: Any) -> str:
         using = dict(self.using)
 
         if salt is not None:
             using["salt"] = salt
 
-        using.update(getattr(settings, "PASSLIB_KEYWORDS", {}).get(self.hasher.name, {}))
+        using.update(
+            getattr(settings, "PASSLIB_KEYWORDS", {}).get(self.hasher.name, {})
+        )
         using.update(kwargs)
         encoded = self.hasher.using(**using).encrypt(password)
 
         return self.from_orig(encoded)
 
-    def decode(self, encoded):
+    def decode(self, encoded: str) -> dict[str, str]:
         algorithm, encoded = encoded.split("$", 1)
         return {"algorithm": algorithm, "hash": encoded}
 
-    def from_orig(self, encrypted):
+    def from_orig(self, encrypted: str) -> str:
         """Convert haash to format as stored in the Django database."""
         return f"{self.algorithm}${encrypted}"
 
-    def to_orig(self, encoded):
+    def to_orig(self, encoded: str) -> str:
         """Convert hash to format produced by passlib."""
         return encoded.split("$", 1)[1]
 
-    def safe_summary(self, encoded):
+    def safe_summary(self, encoded: str) -> OrderedDict:
         algorithm, _hash = encoded.split("$", 1)
-        assert algorithm == self.algorithm
+
+        if not algorithm == self.algorithm:
+            raise AssertionError
 
         data = [
             (_("algorithm"), algorithm),
@@ -123,7 +132,7 @@ class PasslibHasher(BasePasswordHasher):
                     except UnicodeDecodeError:
                         # Thrown if non-ascii bytes are in the hash
                         # pylint: disable=consider-using-f-string
-                        value = "%s%s" % ("?" * mask, "*" * (len(value) - mask))
+                        value = "{}{}".format("?" * mask, "*" * (len(value) - mask))
 
                 to_append.append((mapping, value))
 
@@ -135,12 +144,15 @@ class PasslibHasher(BasePasswordHasher):
 
 
 class PasslibCryptSchemeHasher(PasslibHasher):
-    """Base class for hash algorithms where the passlib version of the hash just prepends a ``"$"``."""
+    """
+    Base class for hash algorithms where the passlib version
+    of the hash just prepends a `"$"`.
+    """
 
-    def from_orig(self, encrypted):
+    def from_orig(self, encrypted: str) -> str:
         return encrypted.lstrip("$")
 
-    def to_orig(self, encoded):
+    def to_orig(self, encoded: str) -> str:
         return f"${encoded}"
 
 
@@ -241,6 +253,7 @@ class scram(PasslibCryptSchemeHasher):
 
 
 # bsd_nthash is provided by a converter
+
 
 #########################
 # Standard LDAP schemes #
