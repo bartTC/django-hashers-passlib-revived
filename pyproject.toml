@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "django-hashers-passlib-revived"
 version = "2.0a0"
-packages = [{include = "src/hashers_passlib"}]
+packages = [{include = "hashers_passlib"}]
 description = "Django hashers using passlib"
 authors = ["Mathias Ertl <mati@er.tl>"]
 license = "GNU General Public License (GPL) v3"
