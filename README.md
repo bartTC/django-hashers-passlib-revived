@@ -1,28 +1,39 @@
+# django-hashers-passlib[-revived]
+
+⚠️ The original project [django-hashers-passlib][django-hashers-passlib] has no 
+longer been maintained. It was forked and renamed to `django-hashers-passlib-revived`. 
+You may find the term `django-hashers-passlib` here and throughout the code. 
+
+[django-hashers-passlib]: https://github.com/mathiasertl/django-hashers-passlib
+
+----
+
 `django-hashers-passlib` aims to make password hashing schemes provided by
-[passlib](https://passlib.readthedocs.io/en/stable/) usable in [Django](https://www.djangoproject.com/).
-Unlike passlibs
-[passlib.ext.django](https://pythonhosted.org/passlib/lib/passlib.ext.django.html#module-passlib.ext.django),
-it does not replace Djangos [password management
-system](https://docs.djangoproject.com/en/dev/topics/auth/passwords/) but provides standard hashers that can
+[passlib][passlib] usable in [Django][django]. Unlike passlibs 
+[passlib.ext.django][passlib.ext.django], it does not replace Django's 
+[password management system][pms] but provides standard hashers that can
 be added to the `PASSWORD_HASHERS` setting for hash schemes provided by passlib.
 
-There are two primary usecases for this module:
+[passlib]: https://passlib.readthedocs.io/en/stable
+[django]: https://www.djangoproject.com/
+[passlib.ext.django]: https://pythonhosted.org/passlib/lib/passlib.ext.django.html#module-passlib.ext.django
+[pms]: https://docs.djangoproject.com/en/dev/topics/auth/passwords/
+
+There are two primary use cases for this module:
 
 1. You want to import password hashes from an existing application into your Django database.
 2. You want to export password hashes to a different application in the future.
 
-Installation
-------------
+## Installation
 
 This module is available via pip, install it with
 
-    pip install django-hashers-passlib
+    pip install django-hashers-passlib-revived
 
-It requires Django >= 1.8 (earlier versions might work) and passlib >= 1.6.2. It supports Python versions 2.7
-and 3.4 or later.
+It requires Django >= 3.2 (earlier versions might work) and passlib >= 1.7. 
+It supports Python versions 3.8 or later.
 
-Getting started
----------------
+## Getting started
 
 This module supports almost every hash supported by passlib (some must be converted at first - see below). If
 you want your Django project app to understand hashes provided by passlib, simply add the hashers to the

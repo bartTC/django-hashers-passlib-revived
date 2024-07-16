@@ -8,11 +8,10 @@ name = "django-hashers-passlib-revived"
 version = "2.0a0"
 packages = [{include = "hashers_passlib"}]
 description = "Django hashers using passlib"
-authors = ["Mathias Ertl <mati@er.tl>"]
+authors = ["Mathias Ertl <mati@er.tl>", "Martin Mahner <martin@elephant.house>"]
 license = "GNU General Public License (GPL) v3"
 readme = ["README.md", "CHANGELOG.md"]
 homepage = "https://github.com/bartTC/django-hashers-passlib-revived/"
-keywords = ["django", "wiki"]
 classifiers = [
 	"Development Status :: 6 - Mature",
 	"Programming Language :: Python :: 3 :: Only",
