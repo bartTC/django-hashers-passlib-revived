@@ -15,3 +15,4 @@ DATABASES = {
   }
 }
 USE_TZ = False
+USE_I18N = False

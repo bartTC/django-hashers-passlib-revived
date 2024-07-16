@@ -2,8 +2,8 @@
 *.py[oc]
 *.sw[a-z]
 /.python-version
+/.tool-versions
 /.tox/
 /build/
 /dist/
-/example/
-/testproject/
+poetry.lock
