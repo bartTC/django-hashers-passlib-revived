@@ -18,10 +18,12 @@
 # pylint: disable=invalid-name  # class names follow their passlib counterparts
 
 from collections import OrderedDict
+from importlib import metadata
 
 from django.conf import settings
 from django.contrib.auth.hashers import BasePasswordHasher, mask_hash
 from django.utils.translation import gettext_noop as _
+
 
 _SETTINGS_MAPPING = (
     (_("rounds"), "iterations", False),
@@ -29,7 +31,9 @@ _SETTINGS_MAPPING = (
     (_("checksum"), "hash", 6),
 )
 
-VERSION_STR = "1.0.0"
+__version__ = metadata.version("django-hashers-passlib-revived")
+
+VERSION_STR = __version__
 VERSION = tuple(VERSION_STR.split("."))
 
 

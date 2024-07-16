@@ -1,20 +1,51 @@
 [build-system]
-requires = ["setuptools>=45", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
-[tool.black]
-line-length = 110
-exclude = "migrations"
-
-[tool.isort]
-profile = "black"
-line_length = 110
-skip = ["migrations"]
-
-[tool.pylint.format]
-max-line-length = 110
-
-[tool.pylint.messages_control]
-disable = [
-    "no-self-use",
+# Poetry -----------------------------------------------------------------------
+[tool.poetry]
+name = "django-hashers-passlib-revived"
+version = "2.0a0"
+packages = [{include = "src/hashers_passlib"}]
+description = "Django hashers using passlib"
+authors = ["Mathias Ertl <mati@er.tl>"]
+license = "GNU General Public License (GPL) v3"
+readme = ["README.md", "CHANGELOG.md"]
+homepage = "https://github.com/bartTC/django-hashers-passlib-revived/"
+keywords = ["django", "wiki"]
+classifiers = [
+	"Development Status :: 6 - Mature",
+	"Programming Language :: Python :: 3 :: Only",
+    "Environment :: Other Environment",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4.0",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Systems Administration :: Authentication/Directory",
 ]
+
+[tool.poetry.urls]
+Source = "https://github.com/bartTC/django-hashers-passlib-revived/"
+Issues = "https://github.com/bartTC/django-hashers-passlib-revived/issues"
+Changelog = "https://github.com/bartTC/django-hashers-passlib-revived/blob/main/CHANGELOG.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+django = ">=3.2"
+passlib = ">=1.7"
+
+[tool.poetry.group.dev.dependencies]
+argon2-cffi = "21.3.0"
+bcrypt = "3.2.0"
+pytest = "^8.2.2"
+pytest-django = "^4.8.0"
