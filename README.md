@@ -1,14 +1,14 @@
 # django-hashers-passlib[-revived]
 
 ⚠️ The original project [django-hashers-passlib][django-hashers-passlib] has no 
-longer been maintained. It was forked and renamed to `django-hashers-passlib-revived`. 
-You may find the term `django-hashers-passlib` here and throughout the code. 
+longer been maintained. It was forked, updated and renamed to `django-hashers-passlib-revived`. 
+You may still find the term `django-hashers-passlib` here and throughout the code. 
 
 [django-hashers-passlib]: https://github.com/mathiasertl/django-hashers-passlib
 
 ----
 
-`django-hashers-passlib` aims to make password hashing schemes provided by
+`django-hashers-passlib-revived` aims to make password hashing schemes provided by
 [passlib][passlib] usable in [Django][django]. Unlike passlibs 
 [passlib.ext.django][passlib.ext.django], it does not replace Django's 
 [password management system][pms] but provides standard hashers that can
@@ -30,8 +30,17 @@ This module is available via pip, install it with
 
     pip install django-hashers-passlib-revived
 
-It requires Django >= 3.2 (earlier versions might work) and passlib >= 1.7. 
-It supports Python versions 3.8 or later.
+## Compatibility Matrix:
+
+| Py/Dj     | 3.8 |  3.9 | 3.10 | 3.11 | 3.12 |
+|-----------|-----|------|------|------|------|
+| 3.2 (LTS) | ✓   |  ✓   | ✓    | ✓    | ✓    |
+| 4.0       | ✓   |  ✓   | ✓    | ✓    | ✓    |
+| 4.1       | ✓   |  ✓   | ✓    | ✓    | ✓    |
+| 4.2 (LTS) | —   |  —   | ✓    | ✓    | ✓    |
+| 5.0       | —   |  —   | ✓    | ✓    | ✓    |
+
+In addition, `passlib>=1.7"` is a dependency.
 
 ## Getting started
 
@@ -69,8 +78,7 @@ PASSLIB_KEYWORDS = {
 
 The documentation for passlib contains a list of available parameters.
 
-Import/Export
--------------
+## Import/Export
 
 Django dictates a scheme for storing passwords (see [How Django stores
 passwords](https://docs.djangoproject.com/en/dev/topics/auth/passwords/#auth-password-storage). Some hashes
@@ -123,8 +131,7 @@ for user in User.objects.filter(password__startswith='phpass$'):
     print('%s has hash "%s"' % (user.username, orig_hash))
 ```
 
-Supported hashes
-----------------
+## Supported hashes
 
 This module provides hashers for most hash schemes provided by passlib - but remember you have to import them
 using the hashers `from_orig()` method first to be useable. Some have to be be converted first (see below),
@@ -181,8 +188,7 @@ that already almost fit into Djangos hash scheme, where only the leading `$` is 
 **NOTE:** Some hashes (`bcrypt_sha256`, `pbkdf2_<digest>`, ...) look very similar to what Django provides but
 are actually distinct algorithms.
 
-Hashes supported via conversion
--------------------------------
+## Hashes supported via conversion
 
 Some hash schemes really are just a minor transformation of a different hash scheme. For example, the
 [bsd_nthash](https://pythonhosted.org/passlib/lib/passlib.hash.nthash.html#passlib.hash.bsd_nthash) is just a
@@ -224,20 +230,19 @@ for username, hash in raw_hashes.items():
 The following converters are available under `hashers_passlib.converters`, they
 can be used to convert from and to the original scheme:
 
-From | To | Notes
---- | --- | ---
-[bcrypt](https://pythonhosted.org/passlib/lib/passlib.hash.bcrypt.html) | `BCryptPasswordHasher` | Converted to bcrypt hash supported by the stock Django hasher.
-[bsd_nthash](https://pythonhosted.org/passlib/lib/passlib.hash.nthash.html#passlib.hash.bsd_nthash) | `nthash` | Convert from bsd_nthash to nthash and vice versa.
-[ldap_md5](https://pythonhosted.org/passlib/lib/passlib.hash.ldap_std.html#passlib.hash.ldap_md5) | `UnsaltedMD5PasswordHasher` | Converted to plain MD5 hash supported by Django.
-[ldap_sha1](https://pythonhosted.org/passlib/lib/passlib.hash.ldap_std.html#passlib.hash.ldap_sha1) | `UnsaltedSHA1PasswordHasher` | Converted to plain SHA1 hash supported by Django.
-[ldap_hex_md5](https://pythonhosted.org/passlib/lib/passlib.hash.ldap_other.html#passlib.hash.ldap_hex_md5) | `UnsaltedMD5PasswordHasher` | Converted to plain MD5 hash supported by Django.
-[ldap_hex_sha1](https://pythonhosted.org/passlib/lib/passlib.hash.ldap_other.html#passlib.hash.ldap_hex_sha1) | `UnsaltedSHA1PasswordHasher` | Converted to plain SHA1 hash supported by Django.
-[ldap_{crypt}](https://pythonhosted.org/passlib/lib/passlib.hash.ldap_crypt.html) | various | Converted to their non-LDAP pendants (i.e. `ldap_des_crypt` is converted to a plain `des_crypt` hash).
-[ldap_bcrypt](https://pythonhosted.org/passlib/lib/passlib.hash.ldap_crypt.html) | `BCryptPasswordHasher` | Unlike other ldap_{crypt} schemes, ldap_bcrypt hashes are converted to what Djangos stock BCrypt hashser understands.
-[ldap_pbkdf2_{digest}](https://pythonhosted.org/passlib/lib/passlib.hash.ldap_pbkdf2_digest.html) | `pbkdf2_{digest}` | Converted to their non-LDAP pendants.
+| From                                                                                                          | To                           | Notes                                                                                                                 |
+|---------------------------------------------------------------------------------------------------------------|------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| [bcrypt](https://pythonhosted.org/passlib/lib/passlib.hash.bcrypt.html)                                       | `BCryptPasswordHasher`       | Converted to bcrypt hash supported by the stock Django hasher.                                                        |
+| [bsd_nthash](https://pythonhosted.org/passlib/lib/passlib.hash.nthash.html#passlib.hash.bsd_nthash)           | `nthash`                     | Convert from bsd_nthash to nthash and vice versa.                                                                     |
+| [ldap_md5](https://pythonhosted.org/passlib/lib/passlib.hash.ldap_std.html#passlib.hash.ldap_md5)             | `UnsaltedMD5PasswordHasher`  | Converted to plain MD5 hash supported by Django.                                                                      |
+| [ldap_sha1](https://pythonhosted.org/passlib/lib/passlib.hash.ldap_std.html#passlib.hash.ldap_sha1)           | `UnsaltedSHA1PasswordHasher` | Converted to plain SHA1 hash supported by Django.                                                                     |
+| [ldap_hex_md5](https://pythonhosted.org/passlib/lib/passlib.hash.ldap_other.html#passlib.hash.ldap_hex_md5)   | `UnsaltedMD5PasswordHasher`  | Converted to plain MD5 hash supported by Django.                                                                      |
+| [ldap_hex_sha1](https://pythonhosted.org/passlib/lib/passlib.hash.ldap_other.html#passlib.hash.ldap_hex_sha1) | `UnsaltedSHA1PasswordHasher` | Converted to plain SHA1 hash supported by Django.                                                                     |
+| [ldap_{crypt}](https://pythonhosted.org/passlib/lib/passlib.hash.ldap_crypt.html)                             | various                      | Converted to their non-LDAP pendants (i.e. `ldap_des_crypt` is converted to a plain `des_crypt` hash).                |
+| [ldap_bcrypt](https://pythonhosted.org/passlib/lib/passlib.hash.ldap_crypt.html)                              | `BCryptPasswordHasher`       | Unlike other ldap_{crypt} schemes, ldap_bcrypt hashes are converted to what Djangos stock BCrypt hashser understands. |
+| [ldap_pbkdf2_{digest}](https://pythonhosted.org/passlib/lib/passlib.hash.ldap_pbkdf2_digest.html)             | `pbkdf2_{digest}`            | Converted to their non-LDAP pendants.                                                                                 |
 
-Unsupported hashes
-------------------
+## Unsupported hashes
 
 Some hashes are unsupported because they require the username to generate the salt: 
 [postgres_md5](https://pythonhosted.org/passlib/lib/passlib.hash.postgres_md5.html),
@@ -245,8 +250,7 @@ Some hashes are unsupported because they require the username to generate the sa
 [msdcc](https://pythonhosted.org/passlib/lib/passlib.hash.msdcc.html) and
 [msdcc2](https://pythonhosted.org/passlib/lib/passlib.hash.msdcc2.html).
 
-How it works internally
------------------------
+## How it works internally
 
 Djangos password management system stores passwords in a format that is very similar but still distinct from
 what passlib calls [Modular Crypt
