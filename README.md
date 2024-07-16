@@ -276,3 +276,25 @@ ways:
    the leading `$` stripped.
 5. All other hashes (which is the vast majority!) just have `<identifier>$` prepended. This is the same
    approach as what Django does with e.g. bcrypt hashes.
+
+## Local Development
+
+Install the project and its development dependencies with Poetry:
+
+```bash
+pip install poetry
+poetry install
+```
+
+You can invoke the Testsuite with pytest:
+
+```bash
+poetry run pytest
+```
+
+You can test against a combination of all supported Django and Python versions with Tox:
+
+```bash
+pip install tox
+tox p
+```
