@@ -1,6 +1,6 @@
 # ChangeLog
 
-## 2.0 (WIP)
+## 2.0 (2024-07-16)
 
 The original project [django-hashes-passlib](https://github.com/mathiasertl/django-hashers-passlib) has no longer been maintained by the original developer. It was forked and renamed to `django-hashers-passlib-revived`
 
