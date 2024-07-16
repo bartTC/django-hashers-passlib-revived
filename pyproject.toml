@@ -47,5 +47,21 @@ passlib = ">=1.7"
 [tool.poetry.group.dev.dependencies]
 argon2-cffi = "21.3.0"
 bcrypt = "3.2.0"
-pytest = "^8.2.2"
-pytest-django = "^4.8.0"
+pytest = "*"
+pytest-django = "*"
+pytest-socket = "*"
+[tool.ruff.lint.extend-per-file-ignores]
+# Also ignore `E402` in all `__init__.py` files.
+"tests.py" = [
+  "S101",     # S101 Use of `assert` detected
+  "S105",     # Possible hardcoded password
+  "PLR2004",  # Magic value used in comparison,
+]
+
+[tool.pytest.ini_options]
+python_files = ["tests.py",]
+addopts = """
+    --ds=hashers_passlib.tests.settings
+    --nomigrations
+    --disable-socket
+"""

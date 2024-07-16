@@ -14,3 +14,4 @@ DATABASES = {
     'NAME': ':memory:',
   }
 }
+USE_TZ = False
