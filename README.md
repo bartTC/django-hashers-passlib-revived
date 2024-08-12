@@ -39,6 +39,7 @@ This module is available via pip, install it with
 | 4.1       | ✓   |  ✓   | ✓    | ✓    | ✓    |
 | 4.2 (LTS) | —   |  —   | ✓    | ✓    | ✓    |
 | 5.0       | —   |  —   | ✓    | ✓    | ✓    |
+| 5.1       | —   |  —   | ✓    | ✓    | ✓    |
 
 In addition, `passlib>=1.7"` is a dependency.
 
