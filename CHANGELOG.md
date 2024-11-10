@@ -2,7 +2,8 @@
 
 ## WIP
 
-- Added support for Django 5.1.
+- Added Django 5.1 to test settings.
+- Added Python 3.13 to test settings.
 
 ## 2.0 (2024-07-16)
 
