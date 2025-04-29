@@ -101,7 +101,7 @@ toxworkdir = /tmp/tox/django-hashers-passlib-revived
 skip_missing_interpreters = True
 envlist =
     py{38,39,310,311,312}-django-{32,40,41,42}-passlib{17}
-    py{310,311,312,313}-django-{50,51,52}-passlib{17}
+    py{310,311,312,313}-django-{42,50,51,52}-passlib{17}
 
 [gh-actions]
 python =

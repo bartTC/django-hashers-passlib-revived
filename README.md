@@ -1,3 +1,5 @@
+[![Testsuite](https://github.com/bartTC/django-hashers-passlib-revived/actions/workflows/tests.yml/badge.svg)](https://github.com/bartTC/django-hashers-passlib-revived/actions/workflows/tests.yml)
+
 # django-hashers-passlib[-revived]
 
 ⚠️ The original project [django-hashers-passlib][django-hashers-passlib] has no
@@ -32,15 +34,15 @@ This module is available via pip, install it with
 
 ## Compatibility Matrix:
 
-| Py/Dj     | 3.8 |  3.9 | 3.10 | 3.11 | 3.12 |
-|-----------|-----|------|------|------|------|
-| 3.2 (LTS) | ✓   |  ✓   | ✓    | ✓    | ✓    |
-| 4.0       | ✓   |  ✓   | ✓    | ✓    | ✓    |
-| 4.1       | ✓   |  ✓   | ✓    | ✓    | ✓    |
-| 4.2 (LTS) | —   |  —   | ✓    | ✓    | ✓    |
-| 5.0       | —   |  —   | ✓    | ✓    | ✓    |
-| 5.1       | —   |  —   | ✓    | ✓    | ✓    |
-| 5.2 (LTS) | —   |  —   | ✓    | ✓    | ✓    |
+| Py/Dj     | 3.8 | 3.9 | 3.10 | 3.11 | 3.12 | 3.13 |
+|-----------|-----|-----|------|------|------|------|
+| 3.2 (LTS) | ✓   | ✓   | ✓    | ✓    | ✓    | —    |
+| 4.0       | ✓   | ✓   | ✓    | ✓    | ✓    | —    |
+| 4.1       | ✓   | ✓   | ✓    | ✓    | ✓    | —    |
+| 4.2 (LTS) | —   | —   | ✓    | ✓    | ✓    | ✓    |
+| 5.0       | —   | —   | ✓    | ✓    | ✓    | ✓    |
+| 5.1       | —   | —   | ✓    | ✓    | ✓    | ✓    |
+| 5.2 (LTS) | —   | —   | ✓    | ✓    | ✓    | ✓    |
 
 In addition, `passlib>=1.7"` is a dependency.
 
