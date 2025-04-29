@@ -1,16 +1,16 @@
 # django-hashers-passlib[-revived]
 
-⚠️ The original project [django-hashers-passlib][django-hashers-passlib] has no 
-longer been maintained. It was forked, updated and renamed to `django-hashers-passlib-revived`. 
-You may still find the term `django-hashers-passlib` here and throughout the code. 
+⚠️ The original project [django-hashers-passlib][django-hashers-passlib] has no
+longer been maintained. It was forked, updated and renamed to `django-hashers-passlib-revived`.
+You may still find the term `django-hashers-passlib` here and throughout the code.
 
 [django-hashers-passlib]: https://github.com/mathiasertl/django-hashers-passlib
 
 ----
 
 `django-hashers-passlib-revived` aims to make password hashing schemes provided by
-[passlib][passlib] usable in [Django][django]. Unlike passlibs 
-[passlib.ext.django][passlib.ext.django], it does not replace Django's 
+[passlib][passlib] usable in [Django][django]. Unlike passlibs
+[passlib.ext.django][passlib.ext.django], it does not replace Django's
 [password management system][pms] but provides standard hashers that can
 be added to the `PASSWORD_HASHERS` setting for hash schemes provided by passlib.
 
@@ -40,6 +40,7 @@ This module is available via pip, install it with
 | 4.2 (LTS) | —   |  —   | ✓    | ✓    | ✓    |
 | 5.0       | —   |  —   | ✓    | ✓    | ✓    |
 | 5.1       | —   |  —   | ✓    | ✓    | ✓    |
+| 5.2 (LTS) | —   |  —   | ✓    | ✓    | ✓    |
 
 In addition, `passlib>=1.7"` is a dependency.
 
@@ -114,7 +115,7 @@ for username, hash in raw_hashes.items():
     user.save()
 ```
 
-The users "joe" and "jane" can now login with their old usernames and passwords. 
+The users "joe" and "jane" can now login with their old usernames and passwords.
 
 If you want to export users with a phpass hash to a WordPress database again, you can simple get the original
 hashes back (for simplicity, we just print everything to stdout here):
@@ -146,7 +147,7 @@ model](https://docs.djangoproject.com/en/dev/topics/auth/customizing/#specifying
 least 256 characters for `hex_sha512`, `pbkdf2_sha512`, `scram` and `sha512_crypt` or at least 384 characters
 for `grub_pbkdf2_sha512`.
 
-The following algorithms are supported: 
+The following algorithms are supported:
 [des_crypt](https://pythonhosted.org/passlib/lib/passlib.hash.des_crypt.html),
 [bsdi_crypt](https://pythonhosted.org/passlib/lib/passlib.hash.bsdi_crypt.html),
 [bigcrypt](https://pythonhosted.org/passlib/lib/passlib.hash.bigcrypt.html),
@@ -196,7 +197,7 @@ Some hash schemes really are just a minor transformation of a different hash sch
 regular [nthash](https://pythonhosted.org/passlib/lib/passlib.hash.nthash.html#passlib.hash.nthash) with
 `$3$$` prepended and the
 [ldap_md5](https://pythonhosted.org/passlib/lib/passlib.hash.ldap_std.html#passlib.hash.ldap_md5) has is just
-a plain MD5 hash with `{MD5}` prepended that is already supported by Django. 
+a plain MD5 hash with `{MD5}` prepended that is already supported by Django.
 
 In order to avoid code duplication, this module does not provide password hashers for these schemes, but
 converters under `hashers_passlib.converters`.  Converted hashes are either readable by a different hasher or
@@ -245,7 +246,7 @@ can be used to convert from and to the original scheme:
 
 ## Unsupported hashes
 
-Some hashes are unsupported because they require the username to generate the salt: 
+Some hashes are unsupported because they require the username to generate the salt:
 [postgres_md5](https://pythonhosted.org/passlib/lib/passlib.hash.postgres_md5.html),
 [oracle10](https://pythonhosted.org/passlib/lib/passlib.hash.oracle10.html),
 [msdcc](https://pythonhosted.org/passlib/lib/passlib.hash.msdcc.html) and
