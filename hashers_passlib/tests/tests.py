@@ -16,6 +16,7 @@
 
 from collections import OrderedDict
 
+import django
 import passlib
 import pytest
 from django.contrib.auth.hashers import check_password, make_password
@@ -24,6 +25,8 @@ from pytest_django.fixtures import SettingsWrapper
 
 import hashers_passlib
 from hashers_passlib import converters
+
+IS_DJANGO_42_PLUS = django.VERSION >= (4, 2)
 
 PASSWORDS = [
     "I",
@@ -65,7 +68,7 @@ class BaseMixin:
         assert isinstance(summary, OrderedDict)
         assert len(summary) >= 1
 
-    @pytest.mark.django_db()
+    @pytest.mark.django_db
     def test_check(self, settings: SettingsWrapper) -> None:
         """Test creating passwords and checking them again using our hashes."""
         settings.PASSWORD_HASHERS = [self.path]
@@ -82,7 +85,7 @@ class BaseMixin:
             back = self.hasher.from_orig(encoded_orig)
             assert encoded == back
 
-    @pytest.mark.django_db()
+    @pytest.mark.django_db
     def test_user_model(
         self, settings: SettingsWrapper, django_user_model: User
     ) -> None:
@@ -111,7 +114,7 @@ class BaseConverterMixin:
     def setup_class(self) -> None:
         self.alt_hasher = getattr(passlib.hash, self.converter.__class__.__name__)
 
-    @pytest.mark.django_db()
+    @pytest.mark.django_db
     def test_base(self, settings: SettingsWrapper) -> None:
         """Basic test for converters."""
         settings.PASSWORD_HASHERS = [self.hasher]
@@ -311,21 +314,33 @@ class TestBsdNthash(BaseConverterMixin):
     converter = converters.bsd_nthash()
 
 
+@pytest.mark.skipif(
+    IS_DJANGO_42_PLUS, reason="Django 4.2+ does not support this hasher."
+)
 class TestLdapMd5(BaseConverterMixin):
     hasher = "django.contrib.auth.hashers.UnsaltedMD5PasswordHasher"
     converter = converters.ldap_md5()
 
 
+@pytest.mark.skipif(
+    IS_DJANGO_42_PLUS, reason="Django 4.2+ does not support this hasher."
+)
 class TestLdapSha1(BaseConverterMixin):
     hasher = "django.contrib.auth.hashers.UnsaltedSHA1PasswordHasher"
     converter = converters.ldap_sha1()
 
 
+@pytest.mark.skipif(
+    IS_DJANGO_42_PLUS, reason="Django 4.2+ does not support this hasher."
+)
 class TestLdapHexMd5(BaseConverterMixin):
     hasher = "django.contrib.auth.hashers.UnsaltedMD5PasswordHasher"
     converter = converters.ldap_hex_md5()
 
 
+@pytest.mark.skipif(
+    IS_DJANGO_42_PLUS, reason="Django 4.2+ does not support this hasher."
+)
 class TestLdapHexSha1(BaseConverterMixin):
     hasher = "django.contrib.auth.hashers.UnsaltedSHA1PasswordHasher"
     converter = converters.ldap_hex_sha1()
