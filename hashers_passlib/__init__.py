@@ -19,7 +19,7 @@ from __future__ import annotations
 
 from collections import OrderedDict
 from importlib import metadata
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from django.conf import settings
 from django.contrib.auth.hashers import BasePasswordHasher, mask_hash
@@ -43,11 +43,11 @@ VERSION = tuple(VERSION_STR.split("."))
 class PasslibHasher(BasePasswordHasher):
     """Base class for all passlib-based hashers."""
 
-    library = "passlib.hash"
-    handler = None
-    using = {}
-    _hasher = None
-    _algorithm = None
+    library: str = "passlib.hash"
+    handler: str = None
+    using: ClassVar[dict[str, str]] = {}
+    _hasher: Callable = None
+    _algorithm: str = None
 
     def salt(self) -> None:
         """Just return None, passlib handles salt-generation."""
@@ -57,7 +57,7 @@ class PasslibHasher(BasePasswordHasher):
     def algorithm(self) -> str:
         """Get name of the algorithm as used in the Django database."""
         if self._algorithm is None:
-            self._algorithm = self.__class__.__name__
+            self._algorithm: str = self.__class__.__name__
         return self._algorithm
 
     def get_handler(self) -> Callable:
@@ -81,7 +81,7 @@ class PasslibHasher(BasePasswordHasher):
     def verify(self, password: str, encoded: str) -> bool:
         return self.hasher.verify(password, self.to_orig(encoded))
 
-    def encode(self, password: str, salt: str | None = None, **kwargs: Any) -> str:
+    def encode(self, password: str, salt: str | None = None, **kwargs: Any) -> str:  # noqa: ANN401
         using = dict(self.using)
 
         if salt is not None:
@@ -205,14 +205,14 @@ class apr_md5_crypt(PasslibCryptSchemeHasher):
     """Hasher for :py:class:`passlib:passlib.hash.apr_md5_crypt`."""
 
     handler = "apr_md5_crypt"
-    algorithm = "apr1"
+    algorithm: str = "apr1"
 
 
 class bcrypt_sha256(PasslibCryptSchemeHasher):
     """Hasher for :py:class:`passlib:passlib.hash.bcrypt_sha256`."""
 
     handler = "bcrypt_sha256"
-    algorithm = "bcrypt-sha256"
+    algorithm: str = "bcrypt-sha256"
 
 
 class phpass(PasslibHasher):
@@ -223,21 +223,21 @@ class pbkdf2_sha1(PasslibCryptSchemeHasher):
     """Hasher for :py:class:`passlib:passlib.hash.pbkdf2_sha1`."""
 
     handler = "pbkdf2_sha1"
-    algorithm = "pbkdf2"
+    algorithm: str = "pbkdf2"
 
 
 class pbkdf2_sha256(PasslibCryptSchemeHasher):
     """Hasher for :py:class:`passlib:passlib.hash.pbkdf2_sha256`."""
 
     handler = "pbkdf2_sha256"
-    algorithm = "pbkdf2-sha256"
+    algorithm: str = "pbkdf2-sha256"
 
 
 class pbkdf2_sha512(PasslibCryptSchemeHasher):
     """Hasher for :py:class:`passlib:passlib.hash.pbkdf2_sha512`."""
 
     handler = "pbkdf2_sha512"
-    algorithm = "pbkdf2-sha512"
+    algorithm: str = "pbkdf2-sha512"
 
 
 class cta_pbkdf2_sha1(PasslibHasher):
@@ -382,8 +382,8 @@ class argon2i(PasslibCryptSchemeHasher):
     """
 
     handler = "argon2"
-    algorithm = "argon2i"
-    using = {"type": "I"}
+    algorithm: str = "argon2i"
+    using: ClassVar[dict[str, str]] = {"type": "I"}
 
 
 class scrypt(PasslibCryptSchemeHasher):
@@ -410,8 +410,8 @@ class argon2d(argon2i):
     .. versionadded:: 1.0.0
     """
 
-    using = {"type": "D"}
-    algorithm = "argon2d"
+    using: ClassVar[dict[str, str]] = {"type": "D"}
+    algorithm: str = "argon2d"
 
 
 class argon2id(argon2i):
@@ -424,5 +424,5 @@ class argon2id(argon2i):
     .. versionadded:: 1.0.0
     """
 
-    using = {"type": "ID"}
-    algorithm = "argon2id"
+    using: ClassVar[dict[str, str]] = {"type": "ID"}
+    algorithm: str = "argon2id"
