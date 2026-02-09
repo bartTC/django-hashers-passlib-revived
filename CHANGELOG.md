@@ -1,6 +1,6 @@
 # ChangeLog
 
-## WIP
+## 2.0.1 (2026-02-09)
 
 - Added Django 5.1, 5.2 and 6.0 to test settings.
 - Added Python 3.13 and 3.14 to test settings.
