@@ -25,6 +25,7 @@ classifiers = [
     "Framework :: Django :: 5.0",
     "Framework :: Django :: 5.1",
     "Framework :: Django :: 5.2",
+    "Framework :: Django :: 6.0",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Operating System :: OS Independent",
@@ -35,6 +36,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: System :: Systems Administration :: Authentication/Directory",
@@ -98,8 +100,13 @@ legacy_tox_ini = """
 toxworkdir = /tmp/tox/django-hashers-passlib-revived
 skip_missing_interpreters = True
 envlist =
-    py{38,39,310,311,312}-django-{32,40,41,42}-passlib{17}
-    py{310,311,312,313}-django-{42,50,51,52}-passlib{17}
+    py{38,39,310}-django-{32,40}-passlib{17}
+    py{38,39,310,311}-django-{41}-passlib{17}
+    py{38,39,310,311,312}-django-{42}-passlib{17}
+    py{310,311,312}-django-{50}-passlib{17}
+    py{310,311,312,313}-django-{51}-passlib{17}
+    py{310,311,312,313,314}-django-{52}-passlib{17}
+    py{312,313,314}-django-{60}-passlib{17}
 
 [gh-actions]
 python =
@@ -109,15 +116,18 @@ python =
     3.11: py311
     3.12: py312
     3.13: py313
+    3.14: py314
 
 [testenv]
 deps=
     django-32: django==3.2.*
     django-40: django==4.0.*
     django-41: django==4.1.*
+    django-42: django==4.2.*
     django-50: django==5.0.*
     django-51: django==5.1.*
     django-52: django==5.2.*
+    django-60: django==6.0.*
     passlib17: passlib==1.7.4
     argon2-cffi==21.3.0
     bcrypt==3.2.0
