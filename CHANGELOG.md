@@ -2,8 +2,9 @@
 
 ## WIP
 
-- Added Django 5.1 to test settings.
-- Added Python 3.13 to test settings.
+- Added Django 5.1, 5.2 and 6.0 to test settings.
+- Added Python 3.13 and 3.14 to test settings.
+- Fixed compatibility matrix to match official Django/Python version support.
 
 ## 2.0 (2024-07-16)
 
